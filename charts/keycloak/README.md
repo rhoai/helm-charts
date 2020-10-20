@@ -15,6 +15,8 @@ For more information on Keycloak and its capabilities, see its [documentation](h
 
 ## Prerequisites Details
 
+- Kubernetes v1.14+
+
 The chart has an optional dependency on the [PostgreSQL](https://github.com/helm/charts/tree/master/stable/postgresql) chart.
 By default, the PostgreSQL chart requires PV support on underlying infrastructure (may be disabled).
 
