@@ -3,6 +3,35 @@ entries:
   keycloak:
   - apiVersion: v1
     appVersion: 5.0.0
+    created: "2020-10-20T14:15:09.984387437Z"
+    dependencies:
+    - condition: keycloak.persistence.deployPostgres
+      name: postgresql
+      repository: https://kubernetes-charts.storage.googleapis.com/
+      version: 0.15.0
+    description: Open Source Identity and Access Management For Modern Applications
+      and Services
+    digest: 059c41404f7d50842bb4bbefff09a3dcb88d1129aefc9eed447ab607f9837e61
+    home: https://www.keycloak.org/
+    icon: https://www.keycloak.org/resources/images/keycloak_logo_480x108.png
+    keywords:
+    - sso
+    - idm
+    - openid connect
+    - saml
+    - kerberos
+    - ldap
+    maintainers:
+    - email: anthony.alves@rho.ai
+      name: Anthony
+    name: keycloak
+    sources:
+    - https://github.com/jboss-dockerfiles/keycloak
+    urls:
+    - https://github.com/rhoai/helm-charts/releases/download/keycloak-4.14.3/keycloak-4.14.3.tgz
+    version: 4.14.3
+  - apiVersion: v1
+    appVersion: 5.0.0
     created: "2020-10-20T14:03:14.948138825Z"
     dependencies:
     - condition: keycloak.persistence.deployPostgres
