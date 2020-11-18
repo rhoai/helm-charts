@@ -59,6 +59,21 @@ entries:
     urls:
     - https://github.com/rhoai/helm-charts/releases/download/keycloak-4.14.2/keycloak-4.14.2.tgz
     version: 4.14.2
+  postgresql:
+  - apiVersion: v2
+    appVersion: 0.7.0
+    created: "2020-11-18T22:35:12.766172209Z"
+    dependencies:
+    - name: timescaledb-single
+      repository: https://charts.timescale.com
+      version: 0.7.0
+    description: Helm chart for deploying HA Postgres with backups
+    digest: 1e51298829e247cc1e11aa0f0ff59a610eda773c6133b2f3405385cbbf32224b
+    name: postgresql
+    type: application
+    urls:
+    - https://github.com/rhoai/helm-charts/releases/download/postgresql-0.1.0/postgresql-0.1.0.tgz
+    version: 0.1.0
   redis:
   - apiVersion: v2
     appVersion: 12.0.1
