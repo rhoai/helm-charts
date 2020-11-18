@@ -1,0 +1,2 @@
+1. Get service by running this command
+kubectl --namespace {{ .Release.Namespace }} get svc

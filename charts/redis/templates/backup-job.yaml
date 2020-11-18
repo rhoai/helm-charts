@@ -1,0 +1,58 @@
+{{- if .Values.backups.enabled }}
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: {{ .Values.redis.fullnameOverride }}-backup
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app.kubernetes.io/name: {{ .Values.redis.fullnameOverride }}-backup
+    helm.sh/chart: {{ template "redis.chart" . }}
+spec:
+  concurrencyPolicy: Forbid
+  failedJobsHistoryLimit: 2
+  successfulJobsHistoryLimit: 1
+  schedule: {{ .Values.backups.schedule|quote }}
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            app.kubernetes.io/name: {{ .Values.redis.fullnameOverride }}-backup
+            app.kubernetes.io/instance: {{ .Release.Name }}
+        spec:
+          restartPolicy: Never
+          serviceAccountName: redis-bak-svc-acct
+          containers:
+            - name: {{ .Values.redis.fullnameOverride }}-backup
+              image: "{{ .Values.backups.image.repository }}:{{ .Values.backups.image.tag }}"
+              imagePullPolicy: Always
+              command:
+                - /bin/sh
+                - /scripts/backup.sh
+              env:
+                - name: REDIS_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: {{ .Values.redis.fullnameOverride }}
+                      key: redis-password
+                - name: AWS_ACCESS_KEY_ID
+                  valueFrom:
+                    secretKeyRef:
+                      name: {{ .Values.redis.fullnameOverride }}-aws
+                      key: accessKey
+                - name: AWS_SECRET_ACCESS_KEY
+                  valueFrom:
+                      secretKeyRef:
+                        name: {{ .Values.redis.fullnameOverride }}-aws
+                        key: secretKey
+                - name: AWS_REGION
+                  value: us-east-1
+              volumeMounts:
+                - name: scripts
+                  mountPath: /scripts
+          volumes:
+            - name: scripts
+              configMap:
+                name: {{ .Values.redis.fullnameOverride }}-backup-scripts
+                defaultMode: 0755
+{{- end }}

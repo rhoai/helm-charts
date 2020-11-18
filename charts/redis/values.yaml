@@ -1,0 +1,13 @@
+backups:
+  enabled: false
+  schedule: "* * * * *"
+  aws:
+    accessKey:
+    secretKey:
+    backupsLocation:
+  image:
+    repository: maorfr/skbn
+    tag: 0.5.0
+    pullPolicy: IfNotPresent
+
+redis: {}

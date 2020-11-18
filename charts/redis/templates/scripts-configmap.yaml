@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "redis.fullname" . }}-backup-scripts
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app:  {{ template "redis.fullname" . }}-backup-scripts
+    chart: {{ template "redis.chart" . }}
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+data:
+{{- if .Values.backups.enabled }}
+  backup.sh: |
+    #!/bin/sh
+    cd /tmp && \
+      wget "https://storage.googleapis.com/kubernetes-release/release/$(wget -qO- https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl" && \
+      chmod +x ./kubectl
+
+    # Execute SAVE in redis
+    {{- if .Values.redis.sentinel.enabled}}
+    POD="{{ .Values.redis.fullnameOverride }}-node-0"
+    {{- else }}
+    POD="{{ .Values.redis.fullnameOverride }}-master-0"
+    {{- end }}
+    ./kubectl exec $POD -- redis-cli -a $REDIS_PASSWORD SAVE
+
+    # Copy file to s3
+    BACKUP_NAME="{{ .Values.redis.fullnameOverride }}_`date +"%Y%m%d_%H%M%S"`.rdb"
+    skbn cp \
+      --src k8s://{{ .Release.Namespace }}/$POD/redis/data/dump.rdb \
+      --dst s3://{{ .Values.backups.location }}/$BACKUP_NAME
+{{- end -}}
