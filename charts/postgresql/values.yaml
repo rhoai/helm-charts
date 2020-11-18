@@ -1,0 +1,13 @@
+patroni:
+  superuserPassword:
+  replicationPassword:
+  adminPassword:
+    
+backups:
+  location:
+  aws:
+    region:
+    accessKey:
+    secretKey:
+
+timescaledb-single: {}

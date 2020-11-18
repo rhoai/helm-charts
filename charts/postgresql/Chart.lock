@@ -1,0 +1,6 @@
+dependencies:
+- name: timescaledb-single
+  repository: https://charts.timescale.com
+  version: 0.7.0
+digest: sha256:3226dd14998da051fc17d2ff8861a00120a6144f2e5b2fce045d3d2373d7a274
+generated: "2020-10-05T08:30:26.201716-07:00"
