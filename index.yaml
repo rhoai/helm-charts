@@ -59,4 +59,19 @@ entries:
     urls:
     - https://github.com/rhoai/helm-charts/releases/download/keycloak-4.14.2/keycloak-4.14.2.tgz
     version: 4.14.2
+  redis:
+  - apiVersion: v2
+    appVersion: 12.0.1
+    created: "2020-11-18T22:27:50.994940631Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      version: 12.0.1
+    description: Helm chart for deploying Redis on k8s with backups
+    digest: eaf0a909439b18fc13e07e4244ff8153d38a31e4a53f8025e2b5416aa1b38165
+    name: redis
+    type: application
+    urls:
+    - https://github.com/rhoai/helm-charts/releases/download/redis-0.1.1/redis-0.1.1.tgz
+    version: 0.1.1
 generated: "2020-10-20T14:03:14.730893637Z"
