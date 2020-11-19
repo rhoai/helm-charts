@@ -18,14 +18,14 @@ data:
 
     # Execute SAVE in redis
     {{- if .Values.redis.sentinel.enabled}}
-    POD="{{ .Values.redis.fullnameOverride }}-node-0"
+    POD="{{ template "redis.fullname" . }}-node-0"
     {{- else }}
-    POD="{{ .Values.redis.fullnameOverride }}-master-0"
+    POD="{{ template "redis.fullname" . }}-master-0"
     {{- end }}
     ./kubectl exec $POD -- redis-cli -a $REDIS_PASSWORD SAVE
 
     # Copy file to s3
-    BACKUP_NAME="{{ .Values.redis.fullnameOverride }}_`date +"%Y%m%d_%H%M%S"`.rdb"
+    BACKUP_NAME="{{ template "redis.fullname" . }}_`date +"%Y%m%d_%H%M%S"`.rdb"
     skbn cp \
       --src k8s://{{ .Release.Namespace }}/$POD/redis/data/dump.rdb \
       --dst s3://{{ .Values.backups.location }}/$BACKUP_NAME
