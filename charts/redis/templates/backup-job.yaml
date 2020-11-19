@@ -2,10 +2,10 @@
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
-  name: {{ .Values.redis.fullnameOverride }}-backup
+  name: {{ template "redis.fullname" . }}-backup
   namespace: {{ .Release.Namespace }}
   labels:
-    app.kubernetes.io/name: {{ .Values.redis.fullnameOverride }}-backup
+    app.kubernetes.io/name: {{ template "redis.fullname" . }}-backup
     helm.sh/chart: {{ template "redis.chart" . }}
 spec:
   concurrencyPolicy: Forbid
@@ -17,13 +17,13 @@ spec:
       template:
         metadata:
           labels:
-            app.kubernetes.io/name: {{ .Values.redis.fullnameOverride }}-backup
+            app.kubernetes.io/name: {{ template "redis.fullname" . }}-backup
             app.kubernetes.io/instance: {{ .Release.Name }}
         spec:
           restartPolicy: Never
           serviceAccountName: redis-bak-svc-acct
           containers:
-            - name: {{ .Values.redis.fullnameOverride }}-backup
+            - name: {{ template "redis.fullname" . }}-backup
               image: "{{ .Values.backups.image.repository }}:{{ .Values.backups.image.tag }}"
               imagePullPolicy: Always
               command:
@@ -33,17 +33,17 @@ spec:
                 - name: REDIS_PASSWORD
                   valueFrom:
                     secretKeyRef:
-                      name: {{ .Values.redis.fullnameOverride }}
+                      name: {{ template "redis.fullname" . }}
                       key: redis-password
                 - name: AWS_ACCESS_KEY_ID
                   valueFrom:
                     secretKeyRef:
-                      name: {{ .Values.redis.fullnameOverride }}-aws
+                      name: {{ template "redis.fullname" . }}-aws
                       key: accessKey
                 - name: AWS_SECRET_ACCESS_KEY
                   valueFrom:
                       secretKeyRef:
-                        name: {{ .Values.redis.fullnameOverride }}-aws
+                        name: {{ template "redis.fullname" . }}-aws
                         key: secretKey
                 - name: AWS_REGION
                   value: us-east-1
@@ -53,6 +53,6 @@ spec:
           volumes:
             - name: scripts
               configMap:
-                name: {{ .Values.redis.fullnameOverride }}-backup-scripts
+                name: {{ template "redis.fullname" . }}-backup-scripts
                 defaultMode: 0755
 {{- end }}
