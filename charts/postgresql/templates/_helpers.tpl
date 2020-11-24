@@ -55,10 +55,10 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 Create the name of the service account to use
 */}}
 {{- define "postgresql.serviceAccountName" -}}
-{{- if .Values.serviceAccount.create -}}
-    {{ default (include "postgresql.fullname" .) .Values.serviceAccount.name }}
+{{- if .Values.timescaledb.serviceAccount.create -}}
+    {{ default (include "timescaledb.fullname" .) .Values.timescaledb.serviceAccount.name }}
 {{- else -}}
-    {{ default "default" .Values.serviceAccount.name }}
+    {{ default "default" .Values.timescaledb.serviceAccount.name }}
 {{- end -}}
 {{- end -}}
 

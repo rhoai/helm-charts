@@ -1,0 +1,38 @@
+{{- if .Values.backups.dump.enabled}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "timescaledb.fullname" . }}-backup-scripts
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app:  {{ template "timescaledb.fullname" . }}-backup-scripts
+    chart: {{ template "postgresql.chart" . }}
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+data:
+  backup.sh: |
+    #!/bin/sh
+    cd /tmp && \
+      wget "https://storage.googleapis.com/kubernetes-release/release/$(wget -qO- https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl" && \
+      chmod +x ./kubectl
+
+    BACKUP_NAME="${PG_DB}_`date +"%Y%m%d_%H%M%S"`.dump.gz"
+    BACKUP_PATH="/tmp/${BACKUP_NAME}"
+
+    # Execute dump in postgres
+    POD="{{ template "timescaledb.fullname" . }}-0"
+    ./kubectl exec $POD -c timescaledb -- sh -c "PGPASSWORD=${PG_PASS} /usr/bin/pg_dump --verbose -p ${PG_PORT} -U ${PG_USER} -Fc --no-acl --no-owner ${PG_DB} | gzip -9 > ${BACKUP_PATH}"
+    if [ "$?" -ne 0 ]; then
+        echo "   Backup failed"
+        rm -rf $BACKUP_PATH
+        exit 1
+    fi
+
+    # Copy file to s3
+    skbn cp \
+      --src k8s://{{ .Release.Namespace }}/$POD/timescaledb/tmp/$BACKUP_NAME \
+      --dst s3://{{ .Values.backups.bucket }}{{ .Values.backups.path }}/dump/$BACKUP_NAME
+    
+    ./kubectl exec $POD -c timescaledb -- rm -f ${BACKUP_PATH}
+
+{{- end -}}

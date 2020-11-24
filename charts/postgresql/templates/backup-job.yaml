@@ -1,0 +1,67 @@
+{{- if .Values.backups.dump.enabled }}
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: {{ template "timescaledb.fullname" . }}-full-dump
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app.kubernetes.io/name: {{ template "timescaledb.fullname" . }}-full-dump
+    helm.sh/chart: {{ template "postgresql.chart" . }}
+spec:
+  concurrencyPolicy: Forbid
+  failedJobsHistoryLimit: 2
+  successfulJobsHistoryLimit: 1
+  schedule: {{ .Values.backups.dump.schedule|quote }}
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            app.kubernetes.io/name: {{ template "timescaledb.fullname" . }}-full-dump
+            app.kubernetes.io/instance: {{ .Release.Name }}
+        spec:
+          restartPolicy: Never
+          serviceAccountName: {{ template "postgresql.serviceAccountName" . }}
+          containers:
+            - name: {{ template "timescaledb.fullname" . }}-full-dump
+              image: "{{ .Values.backups.dump.image.repository }}:{{ .Values.backups.dump.image.tag }}"
+              imagePullPolicy: Always
+              command:
+                - /bin/sh
+                - /scripts/backup.sh
+              env:
+                - name: PG_DB
+                  value: {{ .Values.backups.dump.db }}
+                - name: PG_USER
+                  value: admin
+                - name: PG_PASS
+                  valueFrom:
+                    secretKeyRef:
+                      name: {{ template "timescaledb.fullname" . }}-credentials
+                      key: PATRONI_admin_PASSWORD
+                - name: PG_PORT
+                  value: "{{ .Values.timescaledb.loadBalancer.port }}"
+                - name: AWS_ACCESS_KEY_ID
+                  valueFrom:
+                    secretKeyRef:
+                      name: {{ template "timescaledb.fullname" . }}-pgbackrest
+                      key: PGBACKREST_REPO1_S3_KEY
+                - name: AWS_SECRET_ACCESS_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: {{ template "timescaledb.fullname" . }}-pgbackrest
+                      key: PGBACKREST_REPO1_S3_KEY_SECRET
+                - name: AWS_REGION
+                  valueFrom:
+                    secretKeyRef:
+                      name: {{ template "timescaledb.fullname" . }}-pgbackrest
+                      key: PGBACKREST_REPO1_S3_REGION
+              volumeMounts:
+                - name: scripts
+                  mountPath: /scripts
+          volumes:
+            - name: scripts
+              configMap:
+                name: {{ template "timescaledb.fullname" . }}-backup-scripts
+                defaultMode: 0755
+{{- end }}

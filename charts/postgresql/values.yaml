@@ -4,10 +4,19 @@ patroni:
   adminPassword:
     
 backups:
-  location:
+  bucket:
+  path:
+
   aws:
     region:
     accessKey:
     secretKey:
 
-timescaledb-single: {}
+  dump:
+    enabled: false
+    schedule: "0 5 * * *"
+    db: 
+    image:
+      repository: maorfr/skbn
+      tag: 0.5.0
+      pullPolicy: IfNotPresent
