@@ -61,6 +61,21 @@ entries:
     version: 4.14.2
   postgresql:
   - apiVersion: v2
+    appVersion: 0.7.1
+    created: "2020-11-24T22:37:26.677062413Z"
+    dependencies:
+    - alias: timescaledb
+      name: timescaledb-single
+      repository: https://charts.timescale.com
+      version: 0.7.1
+    description: Helm chart for deploying HA Postgres with backups
+    digest: 1f7b6211a4c14327ab9f02dab189e11f31be859dc56a178ce177d36bbf754dd5
+    name: postgresql
+    type: application
+    urls:
+    - https://github.com/rhoai/helm-charts/releases/download/postgresql-0.2.0/postgresql-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v2
     appVersion: 0.7.0
     created: "2020-11-18T22:35:12.766172209Z"
     dependencies:
