@@ -4,7 +4,7 @@ backups:
   aws:
     accessKey:
     secretKey:
-    backupsLocation:
+    location: mybucket/path/to/backups
   image:
     repository: maorfr/skbn
     tag: 0.5.0
