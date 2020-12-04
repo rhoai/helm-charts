@@ -1,6 +1,6 @@
 backups:
   enabled: true
-  schedule: "* * * * *"
+  schedule: "0 0 * * *"
   aws:
     accessKey:
     secretKey:

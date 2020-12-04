@@ -16,7 +16,7 @@ helm install elastic-operator elastic/eck-operator -n <Namespace> \
     --set=config.validateStorageClass=false
 ```
 
-# Uninstall Operator
+## Uninstall Operator
 ```
 helm uninstall elastic-operator-crds -n <Namespace>
 helm uninstall elastic-operator -n <Namespace>
@@ -28,6 +28,7 @@ helm install elastic-cloud --namespace <Namespace> -f values.yaml .
 ```
 
 ## Register snapshot repository S3
+#### Snapshots will be saved in the following format snapshot-YYYY.MM.DD if you need to restore in the future
 ```
 PUT _snapshot/my_backup
 {
