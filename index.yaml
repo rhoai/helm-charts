@@ -91,6 +91,20 @@ entries:
     version: 0.1.0
   redis:
   - apiVersion: v2
+    appVersion: 12.1.2
+    created: "2020-12-07T14:03:45.153717413Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      version: 12.1.2
+    description: Helm chart for deploying Redis on k8s with backups
+    digest: d542a305a95a7ea0f1e3d26fd5a40e58af477df2c29e15ec23d65e73e143091d
+    name: redis
+    type: application
+    urls:
+    - https://github.com/rhoai/helm-charts/releases/download/redis-0.1.5/redis-0.1.5.tgz
+    version: 0.1.5
+  - apiVersion: v2
     appVersion: 12.0.1
     created: "2020-11-24T14:32:18.105996476Z"
     dependencies:
