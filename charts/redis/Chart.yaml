@@ -18,9 +18,9 @@ version: 0.1.4
 
 # This is the version number of the application being deployed. This version number should be
 # incremented each time you make changes to the application.
-appVersion: 12.0.1
+appVersion: 12.1.2
 
 dependencies:
   - name: redis
-    version: 12.0.1
+    version: 12.1.2
     repository: https://charts.bitnami.com/bitnami
