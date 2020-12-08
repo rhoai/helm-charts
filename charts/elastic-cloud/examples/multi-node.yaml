@@ -2,7 +2,7 @@ backups:
   enabled: false
   schedule: "0 0 * * *"
   aws:
-    accessKey: 
+    accessKey:
     secretKey:
 
 kibana:
@@ -26,6 +26,18 @@ kibana:
       name: elasticsearch
 
 elasticsearch:
+  ingress:
+    enabled: false
+    annotations:
+      kubernetes.io/ingress.class: # <ingress class>
+      nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+    hosts:
+      - host: # <host>
+        paths:
+          - /
+    tls:
+      - hosts:
+        - # <host>
   spec:
     version: 6.8.0
     nodeSets:
