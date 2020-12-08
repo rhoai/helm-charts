@@ -28,13 +28,13 @@ helm uninstall elastic-operator-crds -n <Namespace>
 helm uninstall elastic-operator -n <Namespace>
 ```
 
-## Install deployments (ES (3 master/ 3 data) Kibana (1 instance))
+## Install example deloyment (ES (3 master/ 3 data) Kibana (1 instance))
+#### This example values file also includes support for ingress and snapshot backups, but you'll have to enable them with your specific values
 ```
-helm install elastic-cloud --namespace <Namespace> -f values.yaml .
+helm install elastic-cloud --namespace <Namespace> -f examples/multi-node.yaml .
 ```
 
 ## Register snapshot repository S3
-#### Snapshots will be saved in the following format snapshot-YYYY.MM.DD if you need to restore in the future
 ```
 PUT _snapshot/my_backup
 {
@@ -46,3 +46,4 @@ PUT _snapshot/my_backup
   }
 }
 ```
+#### Snapshots will be saved in the following format snapshot-YYYY.MM.DD if you need to restore in the future

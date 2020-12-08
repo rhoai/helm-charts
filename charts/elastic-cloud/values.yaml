@@ -1,51 +1,14 @@
 backups:
-  enabled: true
-  schedule: "0 0 * * *"
+  enabled:
+  schedule:
   aws:
     accessKey:
     secretKey:
 
-
 kibana:
-  enabled:
-  ingress:
-    enabled: true
-    annotations:
-      kubernetes.io/ingress.class:
-      nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
-    hosts:
-      - host:
-        paths:
-          - /
-    tls:
-      - hosts:
-  spec:
-    version: 6.8.0
-    count: 1
-    elasticsearchRef:
-      name: elasticsearch
+  enabled: 
+  ingress: {}
+  spec: {}
 
 elasticsearch:
-  version: 6.8.0
-  master:
-    name: master
-    count: 3
-    resources:
-      requests:
-        cpu: "100m"
-        memory: "2Gi"
-      limits:
-        cpu: "1000m"
-        memory: "4Gi"
-    storage: 5Gi
-  data:
-    name: data
-    count: 3
-    resources:
-      requests:
-        cpu: "100m"
-        memory: "2Gi"
-      limits:
-        cpu: "1000m"
-        memory: "4Gi"
-    storage: 10Gi
+  spec: {}
