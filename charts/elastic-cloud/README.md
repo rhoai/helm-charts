@@ -8,15 +8,21 @@ helm repo update
 ## Install operator and CRDs (Not Cluster-wide)
 #### Due to us needing the CRDs at the time of template installation we MUST install these items manually.
 ```
+helm install elastic-operator-crds elastic/eck-operator-crds
+```
+```
+#### Install CRDs outside of operator so cluster remains even if operator is deleted
+#### We specify a namespace here, but you can opt to install it clusterwide
+
 helm install elastic-operator elastic/eck-operator -n <Namespace> \
-    --set=installCRDs=true \
+    --set=installCRDs=false \
     --set=managedNamespaces='{<Namespace>}' \
     --set=createClusterScopedResources=false \
     --set=webhook.enabled=false \
     --set=config.validateStorageClass=false
 ```
 
-## Uninstall Operator
+## Uninstall Operator and CRDs
 ```
 helm uninstall elastic-operator-crds -n <Namespace>
 helm uninstall elastic-operator -n <Namespace>

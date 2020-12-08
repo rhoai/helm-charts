@@ -5,7 +5,20 @@ backups:
     accessKey:
     secretKey:
 
+
 kibana:
+  enabled:
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class:
+      nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+    hosts:
+      - host:
+        paths:
+          - /
+    tls:
+      - hosts:
   spec:
     version: 6.8.0
     count: 1
