@@ -1,6 +1,7 @@
 backups:
   enabled: false
   schedule: "0 0 * * *"
+  repositoryName: my_backups
   aws:
     accessKey:
     secretKey:

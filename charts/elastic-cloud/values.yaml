@@ -1,6 +1,7 @@
 backups:
   enabled:
   schedule:
+  repositoryName:
   aws:
     accessKey:
     secretKey:
