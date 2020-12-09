@@ -1,0 +1,15 @@
+backups:
+  enabled:
+  schedule:
+  repositoryName:
+  aws:
+    accessKey:
+    secretKey:
+
+kibana:
+  enabled: 
+  ingress: {}
+  spec: {}
+
+elasticsearch:
+  spec: {}
