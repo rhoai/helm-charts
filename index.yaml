@@ -3,6 +3,20 @@ entries:
   elastic-cloud:
   - apiVersion: v2
     appVersion: 1.3.0
+    created: "2020-12-11T20:11:54.245656825Z"
+    description: Helm chart for deploying ELK Stack on k8s using the eck-operator
+      from Elastic
+    digest: 186465825957094ced44068892d68b110fd18f26703508eb956e4a894789bfb7
+    icon: https://helm.elastic.co/icons/elasticsearch.png
+    name: elastic-cloud
+    sources:
+    - https://github.com/elastic/cloud-on-k8s
+    type: application
+    urls:
+    - https://github.com/rhoai/helm-charts/releases/download/elastic-cloud-0.1.1/elastic-cloud-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: 1.3.0
     created: "2020-12-09T14:49:57.861749017Z"
     description: Helm chart for deploying ELK Stack on k8s using the eck-operator
       from Elastic
