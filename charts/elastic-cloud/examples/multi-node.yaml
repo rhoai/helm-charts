@@ -1,5 +1,6 @@
 backups:
   enabled: false
+  namespace:
   schedule: "0 0 * * *"
   repositoryName: my_backups
   aws:
@@ -8,8 +9,10 @@ backups:
 
 kibana:
   enabled: true
+  namespace:
   ingress:
     enabled: false
+    namespace:
     annotations:
       kubernetes.io/ingress.class: # <ingress class>
       nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
@@ -27,8 +30,10 @@ kibana:
       name: elasticsearch
 
 elasticsearch:
+  namespace:
   ingress:
     enabled: false
+    namespace:
     annotations:
       kubernetes.io/ingress.class: # <ingress class>
       nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
@@ -77,12 +82,12 @@ elasticsearch:
           #   - name: AWS_ACCESS_KEY_ID
           #     valueFrom:
           #       secretKeyRef:
-          #         name: aws
+          #         name: elastic-cloud-aws-credentials
           #         key: accessKey
           #   - name: AWS_SECRET_ACCESS_KEY
           #     valueFrom:
           #         secretKeyRef:
-          #           name: aws
+          #           name: elastic-cloud-aws-credentials
           #           key: secretKey
           #   command:
           #   - sh
@@ -135,12 +140,12 @@ elasticsearch:
           #   - name: AWS_ACCESS_KEY_ID
           #     valueFrom:
           #       secretKeyRef:
-          #         name: aws
+          #         name: elastic-cloud-aws-credentials
           #         key: accessKey
           #   - name: AWS_SECRET_ACCESS_KEY
           #     valueFrom:
           #         secretKeyRef:
-          #           name: aws
+          #           name: elastic-cloud-aws-credentials
           #           key: secretKey
           #   command:
           #   - sh
