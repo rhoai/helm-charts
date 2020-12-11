@@ -3,7 +3,7 @@ apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   name: elasticsearch-es-http
-  namespace: {{ .Release.Namespace }}
+  namespace: {{ .Values.elasticsearch.namespace | default .Release.Namespace }}
   labels:
     app.kubernetes.io/name: elasticsearch-es-http
     helm.sh/chart: {{ include "elastic-cloud.chart" . }}

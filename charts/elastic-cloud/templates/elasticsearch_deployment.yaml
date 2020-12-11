@@ -2,5 +2,6 @@ apiVersion: elasticsearch.k8s.elastic.co/v1
 kind: Elasticsearch
 metadata:
   name: elasticsearch
+  namespace: {{ .Values.elasticsearch.namespace | default .Release.Namespace }}
 spec:
 {{ toYaml .Values.elasticsearch.spec | indent 2 }}

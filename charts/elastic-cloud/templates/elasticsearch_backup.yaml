@@ -3,6 +3,7 @@ apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
   name: elasticsearch-snapshotter
+  namespace: {{ .Values.backups.namespace | default .Release.Namespace }}
 spec:
   schedule: {{ .Values.backups.schedule }}
   concurrencyPolicy: Forbid
