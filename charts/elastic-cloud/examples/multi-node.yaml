@@ -12,17 +12,16 @@ kibana:
   namespace:
   ingress:
     enabled: false
-    namespace:
     annotations:
-      kubernetes.io/ingress.class: # <ingress class>
+      kubernetes.io/ingress.class:
       nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
     hosts:
-      - host: # <host>
+      - host:
         paths:
           - /
     tls:
       - hosts:
-        - # <host>
+        - 
   spec:
     version: 6.8.0
     count: 1
@@ -33,17 +32,16 @@ elasticsearch:
   namespace:
   ingress:
     enabled: false
-    namespace:
     annotations:
-      kubernetes.io/ingress.class: # <ingress class>
+      kubernetes.io/ingress.class:
       nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
     hosts:
-      - host: # <host>
+      - host: 
         paths:
           - /
     tls:
       - hosts:
-        - # <host>
+        - 
   spec:
     version: 6.8.0
     nodeSets:
